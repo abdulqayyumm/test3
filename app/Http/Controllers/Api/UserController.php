@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Services\UserService;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\Api\UserRequest;
+use App\Jobs\GenerateUserCsvJob;
 use Illuminate\Http\Request;
 
 class UserController extends BaseController
@@ -66,6 +67,18 @@ class UserController extends BaseController
         }
 
         return $this->sendResponse($data, $this->labelplural . ' retrieved successfully');
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function exportUsers(Request $request)
+    {
+        GenerateUserCsvJob::dispatch();
+        return $this->sendInfo('user exported successfully');
     }
 
     /**

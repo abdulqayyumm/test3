@@ -24,5 +24,6 @@ Route::group([
         Route::get('{id}/edit', [UserController::class, 'edit']);
         Route::put('{id}', [UserController::class, 'update']);
         Route::delete('{id}', [UserController::class, 'destroy']);
+        Route::get('export', [UserController::class, 'exportUsers']);
     });
 });
