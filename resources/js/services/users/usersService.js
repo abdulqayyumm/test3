@@ -46,3 +46,14 @@ export function exportUsers() {
       return handleHttpError(e);
     });
 }
+
+export function fetchAndSaveUsers() {
+  return http
+    .post(`users/fetch/save`)
+    .then(res => {
+      return res.data;
+    })
+    .catch(e => {
+      return handleHttpError(e);
+    });
+}

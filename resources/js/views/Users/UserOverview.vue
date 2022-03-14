@@ -10,7 +10,7 @@
 
 <script>
 import UserOverviewTable from "../../components/Users/UserOverviewTable.vue";
-import { getUsersList, exportUsers } from "../../services/users/usersService";
+import { getUsersList, exportUsers, fetchAndSaveUsers } from "../../services/users/usersService";
 import { loadMore } from "../../services/common";
 import toastMixin from "../../mixins/toastMixin";
 
@@ -36,6 +36,8 @@ export default {
 
   methods: {
     async init () {
+      
+      await fetchAndSaveUsers();
       const response = await getUsersList(this.page);
 
       if (response.error) return this.$displayServerResponse(response);
