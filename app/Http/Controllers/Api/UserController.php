@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\Api\UserRequest;
 use App\Jobs\GenerateUserCsvJob;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class UserController extends BaseController
 {
@@ -46,39 +47,10 @@ class UserController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        $this->fetchAndSaveUser();
-
-        $query = $this->service->getModel()->orderBy('id', 'desc');
-        if (count($this->searchAble)) {
-            foreach ($this->searchAble as $attribute) {
-                foreach ($request->all() as $key => $value) {
-                    if (in_array($key, $this->searchAble)) {
-                        $query = $query->where($attribute, $value);
-                    }
-                }
-            }
-        }
-        if ($request->page) {
-            $data = $query->paginate();
-        } else {
-            $data = $query->get();
-        }
-
-        return $this->sendResponse($data, $this->labelplural . ' retrieved successfully');
-    }
-
-    /**
-     * Display a listing of the resource.
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function exportUsers(Request $request)
     {
         GenerateUserCsvJob::dispatch();
-        return $this->sendInfo('user exported successfully');
+        return $this->sendInfo(Lang::get('user.success.exported'));
     }
 
     /**
@@ -88,20 +60,7 @@ class UserController extends BaseController
      */
     protected function fetchAndSaveUser()
     {
-        $user = $this->service->fetchUser();
-        $this->service->store([
-            'title'        => $user->name->title,
-            'first_name'   => $user->name->first,
-            'last_name'    => $user->name->last,
-            'email'        => $user->email,
-            'phone_number' => $user->phone,
-            'gender'       => $user->gender,
-            'image'        => $user->picture->large,
-            'street'       => $user->location->street->name . ', ' . $user->location->street->number,
-            'city'         => $user->location->city,
-            'state'        => $user->location->state,
-            'country'      => $user->location->country,
-            'postcode'     => $user->location->postcode,
-        ]);
+        $this->service->fetchUser();
+        return $this->sendInfo(Lang::get('user.success.fetched'));
     }
 }
