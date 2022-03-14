@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\ControllerHelper;
+use Illuminate\Support\Facades\Lang;
 
 class BaseController extends Controller
 {
@@ -49,7 +50,7 @@ class BaseController extends Controller
             $data = $query->get();
         }
 
-        return $this->sendResponse($data, $this->labelplural . ' retrieved successfully');
+        return $this->sendResponse($data, Lang::get(['entity' => $this->labelplural], 'general.success.retrieved'));
     }
 
     /**
@@ -73,7 +74,7 @@ class BaseController extends Controller
     {
         $request = $this->getRequest();
         $this->service->store($request->all());
-        return $this->sendInfo($this->labelsingle . ' created successfully');
+        return $this->sendInfo(Lang::get(['entity' => $this->labelsingle], 'general.success.created'));
     }
 
     /**
@@ -86,9 +87,9 @@ class BaseController extends Controller
     {
         $data = $this->service->find($id);
         if(!$data)
-            return $this->sendError($this->labelsingle . ' not found');
+            return $this->sendError(Lang::get('general.error.not_found'));
 
-        return $this->sendResponse($data, $this->labelsingle . ' retrieved successfully');
+        return $this->sendResponse($data, Lang::get(['entity' => $this->labelsingle], 'general.success.retrieved'));
     }
 
     /**
@@ -101,9 +102,9 @@ class BaseController extends Controller
     {
         $data = $this->service->find($id);
         if(!$data)
-            return $this->sendError($this->labelsingle . ' not found');
+            return $this->sendError(Lang::get('general.error.not_found'));
 
-        return $this->sendResponse($data, $this->labelsingle . ' retrieved successfully');
+        return $this->sendResponse($data, Lang::get(['entity' => $this->labelsingle], 'general.success.retrieved'));
     }
 
     /**
@@ -120,12 +121,11 @@ class BaseController extends Controller
 
         $data = $this->service->find($id);
         if(!$data)
-            return $this->sendError($this->labelsingle . ' not found');
+            return $this->sendError(Lang::get('general.error.not_found'));
 
         $this->service->update($request->all(), $id);
 
-        $message = $this->labelsingle . ' updated successfully';
-        return $this->sendInfo($message);
+        return $this->sendInfo(Lang::get(['entity' => $this->labelsingle], 'general.success.updated'));
     }
 
     /**
@@ -138,9 +138,9 @@ class BaseController extends Controller
     {
         $data = $this->service->find($id);
         if(!$data)
-            return $this->sendError($this->labelsingle . ' not found');
+            return $this->sendError(Lang::get('general.error.not_found'));
 
         $data->delete();
-        return $this->sendInfo($this->labelsingle . ' deleted successfully');
+        return $this->sendInfo(Lang::get(['entity' => $this->labelsingle], 'general.success.deleted'));
     }
 }

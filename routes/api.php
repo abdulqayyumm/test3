@@ -24,6 +24,7 @@ Route::group([
         Route::put('{id}', [UserController::class, 'update']);
         Route::delete('{id}', [UserController::class, 'destroy']);
         Route::get('export', [UserController::class, 'exportUsers']);
+        Route::post('fetch/save', [UserController::class, 'fetchAndSaveUser']);
         Route::get('{id}', [UserController::class, 'show']);
     });
 });

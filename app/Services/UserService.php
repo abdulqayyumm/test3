@@ -27,7 +27,27 @@ class UserService extends BaseService
      */
     public function fetchUser()
     {
-        return FetchUsersWebHook::fetchUser()->results[0];
+        $response = FetchUsersWebHook::fetchUser()->results;
+
+        $users = [];
+        foreach($response as $user){
+            array_push($users, [
+                'title'        => $user->name->title,
+                'first_name'   => $user->name->first,
+                'last_name'    => $user->name->last,
+                'email'        => $user->email,
+                'phone_number' => $user->phone,
+                'gender'       => $user->gender,
+                'image'        => $user->picture->large,
+                'street'       => $user->location->street->name . ', ' . $user->location->street->number,
+                'city'         => $user->location->city,
+                'state'        => $user->location->state,
+                'country'      => $user->location->country,
+                'postcode'     => $user->location->postcode,
+            ]);
+        }
+        
+        $user = $this->getModel()->insert($users);
     }
 
     /**
