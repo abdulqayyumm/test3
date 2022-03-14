@@ -21,9 +21,9 @@ Route::group([
     Route::group(['prefix' => 'users'], function ($router) {
         Route::get('', [UserController::class, 'index']);
         Route::post('', [UserController::class, 'store']);
-        Route::get('{id}/edit', [UserController::class, 'edit']);
         Route::put('{id}', [UserController::class, 'update']);
         Route::delete('{id}', [UserController::class, 'destroy']);
         Route::get('export', [UserController::class, 'exportUsers']);
+        Route::get('{id}', [UserController::class, 'show']);
     });
 });

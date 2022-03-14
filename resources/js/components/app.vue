@@ -1,18 +1,11 @@
 <template>
-  <div>
-    {{message}}
+  <div class="container-fluid">
+    <router-view/>
   </div>
 </template>
+
 <script>
-const default_layout = "default";
-
-
 export default {
-  computed: {},
-  data() {
-      return {
-          message:'Hello World'
-      }
-  }
-};
+  name: 'App'
+}
 </script>
