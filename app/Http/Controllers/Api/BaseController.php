@@ -50,7 +50,7 @@ class BaseController extends Controller
             $data = $query->get();
         }
 
-        return $this->sendResponse($data, Lang::get(['entity' => $this->labelplural], 'general.success.retrieved'));
+        return $this->sendResponse($data, Lang::get('general.success.retrieved', ['entity' => $this->labelplural]));
     }
 
     /**
@@ -74,7 +74,7 @@ class BaseController extends Controller
     {
         $request = $this->getRequest();
         $this->service->store($request->all());
-        return $this->sendInfo(Lang::get(['entity' => $this->labelsingle], 'general.success.created'));
+        return $this->sendInfo(Lang::get('general.success.created', ['entity' => $this->labelsingle]));
     }
 
     /**
@@ -89,7 +89,7 @@ class BaseController extends Controller
         if(!$data)
             return $this->sendError(Lang::get('general.error.not_found'));
 
-        return $this->sendResponse($data, Lang::get(['entity' => $this->labelsingle], 'general.success.retrieved'));
+        return $this->sendResponse($data, Lang::get('general.success.retrieved', ['entity' => $this->labelsingle]));
     }
 
     /**
@@ -104,7 +104,7 @@ class BaseController extends Controller
         if(!$data)
             return $this->sendError(Lang::get('general.error.not_found'));
 
-        return $this->sendResponse($data, Lang::get(['entity' => $this->labelsingle], 'general.success.retrieved'));
+        return $this->sendResponse($data, Lang::get('general.success.retrieved', ['entity' => $this->labelsingle]));
     }
 
     /**
@@ -125,7 +125,7 @@ class BaseController extends Controller
 
         $this->service->update($request->all(), $id);
 
-        return $this->sendInfo(Lang::get(['entity' => $this->labelsingle], 'general.success.updated'));
+        return $this->sendInfo(Lang::get('general.success.updated', ['entity' => $this->labelsingle]));
     }
 
     /**
@@ -141,6 +141,6 @@ class BaseController extends Controller
             return $this->sendError(Lang::get('general.error.not_found'));
 
         $data->delete();
-        return $this->sendInfo(Lang::get(['entity' => $this->labelsingle], 'general.success.deleted'));
+        return $this->sendInfo(Lang::get('general.success.deleted', ['entity' => $this->labelsingle]));
     }
 }
